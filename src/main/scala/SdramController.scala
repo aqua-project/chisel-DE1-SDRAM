@@ -16,9 +16,12 @@ class SdramController() extends Module {
   }
 
   val io = new Bundle {
-    val addr = Decoupled (UInt (width = 22));
-    val wdata = Decoupled(UInt(width = 16));
-    val rdata = Decoupled(UInt(width = 16)).flip;
+    val cmd = Decoupled ({ 
+      val we = Bool (INPUT);
+      val addr = UInt (width = 22);
+    });
+    val wdata = Valid(UInt(width = 16));
+    val rdata = Valid(UInt(width = 16)).flip;
     val sdram = new SdramInterface();
   }
 
